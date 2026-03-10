@@ -14,6 +14,7 @@ import {
 import STORAGE_KEY from "./info";
 
 import { motion, AnimatePresence } from "framer-motion";
+import useLocalStorage from "../../hooks/useLocalStorage";
 
 import { DndContext, closestCenter } from "@dnd-kit/core";
 
@@ -34,23 +35,25 @@ import initialTodoTexts from "./initialTodos";
 export default function TodoList() {
   const [todoText, setTodoText] = useState("");
 
-  const [todoTask, setTodoTask] = useState(() => {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    return saved ? JSON.parse(saved) : initialTodoTexts;
-  });
+  const [todoTask, setTodoTask] = useLocalStorage(
+    STORAGE_KEY,
+    initialTodoTexts,
+  );
 
   const [filter, setFilter] = useState("all");
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useLocalStorage("todo-theme", false);
   const [toast, setToast] = useState("");
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(todoTask));
-  }, [todoTask]);
 
   function showToast(message) {
     setToast(message);
     setTimeout(() => setToast(""), 2000);
   }
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.toggle("dark", darkMode);
+    }
+  }, [darkMode]);
 
   function handleSubmit(e) {
     e.preventDefault();

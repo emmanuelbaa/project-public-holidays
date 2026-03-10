@@ -11,8 +11,8 @@ function App() {
 
   return (
     <>
-{/* <Holidays />
-<Accordion /> */}
+<Holidays />
+<Accordion />
 <TodoList />
 
     </>
