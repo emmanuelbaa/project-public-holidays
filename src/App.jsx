@@ -4,6 +4,7 @@ import Holidays from './Components/holidays';
 import Accordion from './Components/Accordion/accordion'
 
 import './index.css';
+import TodoList from './Components/TodoList/todoList';
 
 function App() {
  
@@ -12,6 +13,8 @@ function App() {
     <>
 <Holidays />
 <Accordion />
+<TodoList />
+
     </>
   )
 }
